@@ -24,11 +24,10 @@ public class Attack : MonoBehaviour
 
     public void PointerDownAttack()
     {
-        if(Time.time >= nextAttackTime)
-        {
+        
             Attacker();
-            nextAttackTime = Time.time + 1f/attackRate;
-        }
+        
+       
     }
 
     public void Attacker()

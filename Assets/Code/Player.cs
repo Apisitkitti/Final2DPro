@@ -5,18 +5,19 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     [SerializeField] private float PlayerHealth;
-    
+     public GameObject enemy;
+    public GameObject player;
     public GameObject DeathUI;
     bool DeathCheck = false;
     private int currentLevel;
     
 
     Animator anim;
-    
     void Start()
     {
         anim = GetComponent<Animator>();
         currentLevel = SceneManager.GetActiveScene().buildIndex;
+        
     }
 public void TakeDamage(int damage)
     {
@@ -33,16 +34,18 @@ public void TakeDamage(int damage)
         {
             DeathUI.SetActive(false);
         }
+        if(PlayerHealth >0 && PlayerHealth<=20 )
+        {
+             GetComponent<Renderer>().material.color = Color.red; // เปลี่ยนสีของ GameObject เป็นสีเทา
+        }
     }
     public void Die()
-    {
-        anim.SetBool("Death",true);
+{
+    anim.SetBool("Death",true);
+    StartCoroutine(DeactivateAfterAnimation());
+    DeathUI.SetActive(true);
+}
 
-        StartCoroutine(DeactivateAfterAnimation());
-        DeathUI.SetActive(true);
-         
-        
-    }
 
     private IEnumerator DeactivateAfterAnimation()
     {
@@ -59,6 +62,7 @@ public void TakeDamage(int damage)
         
             
     }
+    
     
 
    
