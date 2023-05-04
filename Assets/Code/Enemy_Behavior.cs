@@ -7,6 +7,9 @@ public class Enemy_Behavior : MonoBehaviour
     public int health = 100;
     public GameObject player;
     public string spawnerTag; // Add spawnerTag property
+    public GameObject deathEffectPrefab;
+    public float deathEffectDuration = 2f;
+    public float deathEffectNoiseScale = 0.1f; // Add a noise scale for the death effect
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -42,11 +45,39 @@ public class Enemy_Behavior : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            // Deal damage to the player
-            collision.gameObject.GetComponent<Player>().TakeDamage(damage);
-            anim.SetBool("Run", false);
-            anim.SetBool("Death",true);
-            Destroy(gameObject);
+            Player player = collision.gameObject.GetComponent<Player>();
+            if (player != null)
+            {
+                // Deal damage to the player
+                player.TakeDamage(damage);
+
+                anim.SetBool("Run", false);
+                anim.SetBool("Death", true);
+                GetComponent<Collider2D>().enabled = false;
+
+                // Instantiate the death effect prefab
+                GameObject deathEffect = Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+
+                // Add Simplex noise to the death effect
+                SpriteRenderer[] renderers = deathEffect.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer renderer in renderers)
+                {
+                    Vector3 noiseOffset = new Vector3(Random.Range(0f, 100f), Random.Range(0f, 100f), Random.Range(0f, 100f));
+                    Vector3 position = renderer.transform.localPosition;
+                    position += new Vector3(
+                        Mathf.PerlinNoise((position.x + noiseOffset.x) * deathEffectNoiseScale, (position.y + noiseOffset.y) * deathEffectNoiseScale) - 0.5f,
+                        Mathf.PerlinNoise((position.y + noiseOffset.y) * deathEffectNoiseScale, (position.z + noiseOffset.z) * deathEffectNoiseScale) - 0.5f,
+                        Mathf.PerlinNoise((position.z + noiseOffset.z) * deathEffectNoiseScale, (position.x + noiseOffset.x) * deathEffectNoiseScale) - 0.5f
+                    );
+                    renderer.transform.localPosition = position;
+                }
+
+                // Destroy the death effect after a duration
+                Destroy(deathEffect, deathEffectDuration);
+
+                // Destroy the enemy GameObject
+                Destroy(gameObject);
+            }
         }
     }
 }

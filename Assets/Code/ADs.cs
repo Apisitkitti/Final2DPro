@@ -96,7 +96,7 @@ public class ADs : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
             
-            player.GetComponent<Player>().Check(true);
+            //player.GetComponent<Player>().Check(true);
             
             // Resume game
             Time.timeScale = Time.timeScale == 0 ? 1 : 0;

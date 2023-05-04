@@ -17,11 +17,19 @@ public class ActiveAgent : MonoBehaviour
     private int enemiesRemaining;
     private bool isSpawning;
     private int currentWave = 0;
+    private bool playerIsDead = false;
 
     void Start()
     {
         isSpawning = true;
         StartCoroutine(SpawnEnemies());
+    }
+    void Update()
+    {
+        if (playerIsDead)
+        {
+            isSpawning = false;
+        }
     }
 
     IEnumerator SpawnEnemies()
@@ -33,6 +41,10 @@ public class ActiveAgent : MonoBehaviour
             // Spawn enemies for the current wave from both spawn points
             for (int i = 0; i < numberOfEnemies; i++)
             {
+                if (playerIsDead)
+                {
+                    break; // Stop spawning if the player is dead
+                }
                 Transform spawnTransform = i % 2 == 0 ? spawnPoint1 : spawnPoint2; // Alternate between spawn points
                 GameObject newEnemyObject = Instantiate(enemyPrefab, spawnTransform.position, Quaternion.identity);
                 Enemy_Behavior newEnemyBehavior = newEnemyObject.GetComponent<Enemy_Behavior>();
@@ -79,5 +91,9 @@ public class ActiveAgent : MonoBehaviour
                 yield return null;
             }
         }
+    }
+    public void PlayerDied()
+    {
+        playerIsDead = true;
     }
 }
