@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OpenSimplex2S;
 
 
 public class Enemy : MonoBehaviour
@@ -67,7 +68,7 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public IEnumerator DeathEffect(int amount)
+    private IEnumerator DeathEffect(int amount)
 {
     float elapsedTime = 0.0f;
     float noiseScale = 0.5f;
@@ -83,7 +84,7 @@ public class Enemy : MonoBehaviour
         float t = elapsedTime / 1.5f;
 
         // Apply Simplex noise to the position of the enemy
-        float noise = Mathf.PerlinNoise((deathPos.x + Time.time * noiseSpeed) * noiseScale, (deathPos.y + Time.time * noiseSpeed) * noiseScale);
+        float noise = (float)OpenSimplex2S.Noise2(0,(deathPos.x + Time.time * noiseSpeed) * noiseScale, (deathPos.y + Time.time * noiseSpeed) * noiseScale);
         Vector3 noiseVec = new Vector3(Mathf.Cos(noise * 360.0f), Mathf.Sin(noise * 360.0f), 0.0f);
         transform.position = deathPos + noiseVec * speed * elapsedTime;
 
@@ -103,6 +104,9 @@ public class Enemy : MonoBehaviour
         yield return null;
     }
 }
+
+
+
 
 
 
