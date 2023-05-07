@@ -45,6 +45,11 @@ public class Player : MonoBehaviour
             isDead = true;
             Die();
         }
+        if (playerHealth <= 20)
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
+
     }
 
     private void Die()
