@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -13,7 +12,8 @@ public class ScoreManager : MonoBehaviour
 
     void Update()
     {
-        scoreText.text = "Score: " + score.ToString();
+        
+            scoreText.text = "Score: " + score.ToString();
     }
 }
 

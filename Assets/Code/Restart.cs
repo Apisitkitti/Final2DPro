@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Restart : MonoBehaviour
 {
-    public Button restartButton;
-
-    void Start()
-    {
-        restartButton.onClick.AddListener(RestartGame);
-    }
-
+    
     public void RestartGame()
     {
+        ScoreManager.score = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
     }
 }

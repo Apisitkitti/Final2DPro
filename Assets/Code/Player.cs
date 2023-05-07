@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static OpenSimplex2S;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class Player : MonoBehaviour
     public Animator anim;
     public GameObject deathUI;
     public GameObject qw;
-    public GameObject deathEffectPrefab;
+    public GameObject Healthbar;
     public float deathEffectDuration = 1.5f;
     public int deathEffectParticleCount = 50;
     public float deathEffectNoiseScale = 0.5f;
     public float deathEffectNoiseSpeed = 1.0f;
+    public Slider healthSlider;
+
 
     private bool isDead = false;
     private bool isPaused = false;
@@ -24,16 +27,17 @@ public class Player : MonoBehaviour
     }
 
     private void Update()
+{
+    if (deathUI.activeSelf) // Check if the DeathUI canvas is active
     {
-        if (isPaused)
-        {
-            Time.timeScale = 0.0f;
-        }
-        else
-        {
-            Time.timeScale = 1.0f;
-        }
+        Time.timeScale = 0.0f; // If yes, pause the game
     }
+    else
+    {
+        Time.timeScale = 1.0f; // Otherwise, resume the game
+    }
+}
+
 
     public void TakeDamage(float damage)
     {
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.red;
         }
-
+        healthSlider.value = playerHealth;
     }
 
     private void Die()
@@ -59,6 +63,8 @@ public class Player : MonoBehaviour
         StartCoroutine(DeactivateAfterAnimation());
         deathUI.SetActive(true);
         qw.SetActive(false);
+        Healthbar.SetActive(false);
+        
 
         isPaused = true;
     }
@@ -91,10 +97,7 @@ public class Player : MonoBehaviour
                 Color targetColor = new Color(Random.value, Random.value, Random.value);
                 Vector3 position = transform.position + new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0.0f); // generate a random position
                 Quaternion rotation = Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)); // generate a random rotation
-                GameObject particle = Instantiate(deathEffectPrefab, position, rotation); // instantiate a particle prefab
-                particle.GetComponent<ParticleSystem>().startColor = targetColor; // set the color of the particle system
-                Destroy(particle, deathEffectDuration); // destroy the
-
+                
         }
 
         yield return null;

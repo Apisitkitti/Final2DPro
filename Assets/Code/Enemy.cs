@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public Animator anim;
     public ParticleSystem particlePrefab;
     ScoreManager score;
+    [SerializeField]ActiveAgent spawn;
     #endregion
 
     [SerializeField] SpriteRenderer render;
@@ -53,12 +54,13 @@ public class Enemy : MonoBehaviour
 
     private void Die()
 {
+    
     anim.SetBool("Run",false);
     anim.SetBool("Death", true);
     StartCoroutine(DeathEffect(amount));
     GetComponent<Collider2D>().enabled = false;
     Destroy(gameObject,2.0f);
-    ScoreManager.score+= point;
+    ScoreManager.score += point*spawn.currentWave+1;
 }
 
 

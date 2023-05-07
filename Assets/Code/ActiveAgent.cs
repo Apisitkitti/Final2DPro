@@ -21,7 +21,7 @@ public class ActiveAgent : MonoBehaviour
 
     private int enemiesRemaining;
     private bool isSpawning;
-    private int currentWave = 0;
+    public int currentWave = 0;
     private bool playerIsDead = false;
 
     void Start()
