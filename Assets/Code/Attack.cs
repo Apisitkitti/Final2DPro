@@ -50,6 +50,10 @@ public class Attack : MonoBehaviour
         {
             hitEnemy.GetComponent<Enemy>().TakeDamage(attackDamage);
         }
+        if(hitEnemy.CompareTag("boss"))
+        {
+            hitEnemy.GetComponent<Boss>().TakeDamage(attackDamage);
+        }
     }
 }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActiveAgent : MonoBehaviour
 {
     public GameObject enemyPrefab;
+    public GameObject Warpdoor;
     public Transform spawnPoint1;
     public Transform spawnPoint2;
     public GameObject[] arrowSpawners;
@@ -40,6 +41,8 @@ public class ActiveAgent : MonoBehaviour
 
     IEnumerator SpawnEnemies()
 {
+    
+    
     int waveNumber = 1;
 
     while (isSpawning)
@@ -102,7 +105,8 @@ public class ActiveAgent : MonoBehaviour
             {
                 if (currentWave >= numberOfWaves)
                 {
-                    isSpawning = false; // Stop spawning enemies if the maximum number of waves has been reached
+                    isSpawning = false;
+                    Warpdoor.SetActive(true); // Stop spawning enemies if the maximum number of waves has been reached
                     break;
                 }
                 else
@@ -118,9 +122,10 @@ public class ActiveAgent : MonoBehaviour
 
             yield return null;
         }
+        
+    
     }
 }
-
 
 }
 

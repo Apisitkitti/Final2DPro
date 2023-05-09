@@ -9,8 +9,7 @@ public class Player : MonoBehaviour
     public float playerHealth = 100.0f;
     public Animator anim;
     public GameObject deathUI;
-    public GameObject qw;
-    public GameObject Healthbar;
+    public GameObject[] UI;
     public float deathEffectDuration = 1.5f;
     public int deathEffectParticleCount = 50;
     public float deathEffectNoiseScale = 0.5f;
@@ -24,6 +23,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        LoadPlayerHealth();
+        
     }
 
     private void Update()
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
     {
         Time.timeScale = 1.0f; // Otherwise, resume the game
     }
+    SavePlayerHealth();
 }
 
 
@@ -62,8 +64,10 @@ public class Player : MonoBehaviour
         StartCoroutine(DeathEffect());
         StartCoroutine(DeactivateAfterAnimation());
         deathUI.SetActive(true);
-        qw.SetActive(false);
-        Healthbar.SetActive(false);
+        foreach(GameObject uitest in UI)
+        {
+            uitest.SetActive(false);
+        }
         
 
         isPaused = true;
@@ -74,6 +78,19 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         gameObject.SetActive(false);
     }
+    void SavePlayerHealth()
+{
+    PlayerPrefs.SetFloat("PlayerHealth", playerHealth);
+    PlayerPrefs.SetFloat("HealthSlider",healthSlider.value);
+    PlayerPrefs.Save();
+}
+void LoadPlayerHealth()
+    {
+        playerHealth = PlayerPrefs.GetFloat("PlayerHealth", playerHealth);
+        healthSlider.value = PlayerPrefs.GetFloat("HealthSlider",healthSlider.value);
+    }
+
+
 
     private IEnumerator DeathEffect()
     {

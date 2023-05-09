@@ -23,6 +23,8 @@ public class Enemy_Behavior : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(PauseMenu.PauseCheck == false)
+        {
         if (player != null)
         {
             // Move towards the player
@@ -39,6 +41,7 @@ public class Enemy_Behavior : MonoBehaviour
             {
                 transform.localScale = new Vector3(1, 1, 1);
             }
+        }
         }
     }
 
@@ -69,7 +72,7 @@ public class Enemy_Behavior : MonoBehaviour
                     (float)OpenSimplex2S.Noise2((long)(position.x + noiseOffset.x), (position.y + noiseOffset.y) * deathEffectNoiseScale, (position.z + noiseOffset.z) * deathEffectNoiseScale) - 0.5f,
                     (float)OpenSimplex2S.Noise2((long)(position.y + noiseOffset.y), (position.z + noiseOffset.z) * deathEffectNoiseScale, (position.x + noiseOffset.x) * deathEffectNoiseScale) - 0.5f,
                     (float)OpenSimplex2S.Noise2((long)(position.z + noiseOffset.z), (position.x + noiseOffset.x) * deathEffectNoiseScale, (position.y + noiseOffset.y) * deathEffectNoiseScale) - 0.5f
-                    );
+                );
 
                     renderer.transform.localPosition = position;
                 }
