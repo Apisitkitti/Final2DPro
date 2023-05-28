@@ -2300,7 +2300,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -342, y: -199}
+  m_AnchoredPosition: {x: -342, y: -188}
   m_SizeDelta: {x: 53.9651, y: 32.6796}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &606764865
@@ -2701,7 +2701,7 @@ GameObject:
   - component: {fileID: 646621531}
   - component: {fileID: 646621530}
   m_Layer: 0
-  m_Name: Spawner
+  m_Name: FireBallSpawnner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2746,7 +2746,7 @@ MonoBehaviour:
   timeBetweenFireballs: 0.5
   player: {fileID: 1957892370}
   maxNumberOfFireballsToSpawn: 20
-  delaydrop: 11
+  delaydrop: 15
 --- !u!4 &646621531
 Transform:
   m_ObjectHideFlags: 0
@@ -3456,7 +3456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 371, y: 195}
+  m_AnchoredPosition: {x: 357, y: 160.99998}
   m_SizeDelta: {x: 79.115, y: 79.1144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &859900580
@@ -4734,7 +4734,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -252.08994, y: -199}
+  m_AnchoredPosition: {x: -252.08994, y: -188}
   m_SizeDelta: {x: 54.951, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &910144427
@@ -5070,7 +5070,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 365.71997, y: -193}
+  m_AnchoredPosition: {x: 327.72, y: -182}
   m_SizeDelta: {x: 164.8448, y: 164.56}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1033249230
@@ -5875,6 +5875,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 303315574}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1311093373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1311093374}
+  m_Layer: 0
+  m_Name: warppoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1311093374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311093373}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.99, y: 1.61, z: 0.28014374}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1386931058
 GameObject:
@@ -11721,7 +11752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -283, y: 187}
+  m_AnchoredPosition: {x: -283, y: 167}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1904317922
@@ -12107,6 +12138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boss_HP: 1000
   bossui: {fileID: 385981375}
+  movementSpeed: 10
   UIanything:
   - {fileID: 606764863}
   - {fileID: 910144425}
@@ -12117,6 +12149,8 @@ MonoBehaviour:
   - {fileID: 859900578}
   - {fileID: 385981373}
   winmenu: {fileID: 1794887402}
+  boss: {fileID: 1957892374}
+  pos: {fileID: 1311093374}
 --- !u!1 &1957923632
 GameObject:
   m_ObjectHideFlags: 0
@@ -12321,7 +12355,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 298, y: -193}
+  m_AnchoredPosition: {x: 260, y: -182}
   m_SizeDelta: {x: 169.7624, y: 164.5582}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1970872134

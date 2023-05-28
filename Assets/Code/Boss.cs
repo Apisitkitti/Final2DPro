@@ -1,22 +1,30 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static OpenSimplex2S;
-
 public class Boss : MonoBehaviour
 {
     Animator anim;
     public int boss_HP = 1000;
     public Slider bossui;
+    public float movementSpeed = 10f;
     [SerializeField] GameObject[] UIanything;
     [SerializeField] GameObject winmenu;
+    [SerializeField] Transform boss;
     private float noiseScale = 0.1f; // adjust to control the scale of the noise
     private float noiseThreshold = 0.6f; // adjust to control the threshold for the noise
+    Rigidbody2D rb;
+    BoxCollider2D col;
+    [SerializeField] Transform pos;
+    public int point = 100;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<BoxCollider2D>();
         
     }
     void Update()
@@ -41,15 +49,34 @@ public class Boss : MonoBehaviour
         
         if(boss_HP <=0)
         {
+            ScoreManager.score += point;
             StartCoroutine(ShakeCamera(0.5f, 0.1f)); // shake the camera for 0.5 seconds with 0.1 intensity
 
             StartCoroutine(FadeOut(1f)); // fade out the screen for 1 second
 
-            StartCoroutine(Explode(2f));
+                StartCoroutine(Explode(2f));
             anim.SetBool("Death",true);
             
         }
          bossui.value = boss_HP;
+         if (boss_HP == 500)
+{
+    rb.simulated = false;
+    col.enabled = false;
+    FireBallSpawnner spawnner = FindObjectOfType<FireBallSpawnner>();
+if (spawnner != null)
+{
+    spawnner.RestartSpawning();
+}
+    Vector3 movement = Vector3.up * movementSpeed * Time.deltaTime;
+    transform.Translate(movement);
+    
+
+    if (transform.position.y <= pos.position.y)
+    {
+        transform.position = new Vector3(transform.position.x, pos.position.y, transform.position.z);
+    }
+}
     
     }
 
@@ -84,7 +111,7 @@ public class Boss : MonoBehaviour
     private IEnumerator Explode(float delay)
     {
         yield return new WaitForSeconds(delay);
-        GameObject explosion = Instantiate(Resources.Load<GameObject>("Explosion"));
+        GameObject explosion = Instantiate(Resources.Load<GameObject>("Resources"));
         explosion.transform.position = transform.position;
         Destroy(gameObject);
         winmenu.SetActive(true);

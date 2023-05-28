@@ -6,6 +6,7 @@ public class FireBall : MonoBehaviour
 {
     public int dam = 10;
     public Transform player;
+    public int point = 1;
     
 
     void Update()
@@ -28,6 +29,7 @@ public class FireBall : MonoBehaviour
             {
                 // Deal damage to the player
                 player.TakeDamage(dam);
+                
             }
             // Destroy the FireBall on collision with the player
             Destroy(gameObject);
@@ -35,6 +37,7 @@ public class FireBall : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             Destroy(gameObject);
+            ScoreManager.score += point;
         }
     }
 }
